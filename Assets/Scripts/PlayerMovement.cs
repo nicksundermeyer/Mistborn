@@ -7,12 +7,17 @@ public class PlayerMovement : MonoBehaviour {
     public CharacterController controller;
 
     [Header ("Power Settings")]
+    [SerializeField] private Transform pullPosition;
     [SerializeField] private float pushStrength = 1000f;
+    [SerializeField] private float pullStrength = 0.5f;
     [SerializeField] private float launchVelocity = 100f;
     [SerializeField] private float launchRadius = 1f;
     [SerializeField] private float launchDistance = 5f;
 
     private bool launching = false;
+    private bool pulling = false;
+    private bool holding = false;
+    private Rigidbody pulledObject;
 
     [Header ("Player Movement")]
     [SerializeField] private Transform groundCheck;
@@ -58,6 +63,20 @@ public class PlayerMovement : MonoBehaviour {
                 velocity.y = Mathf.Max (velocity.y, launch);
             }
         }
+
+        // pulling
+        if (pulling) {
+            // Debug.DrawRay (ray.origin, ray.direction, Color.green, 2f);
+            if ((pulledObject.position - pullPosition.position).magnitude < 1.0f && !holding) {
+                pulledObject.transform.parent = pullPosition;
+                pulledObject.isKinematic = true;
+                holding = true;
+            } else {
+                pulledObject.position = Vector3.MoveTowards (pulledObject.position, pullPosition.position, pullStrength);
+                pulledObject.isKinematic = false;
+                holding = false;
+            }
+        }
     }
 
     public void Pull (InputAction.CallbackContext context) {
@@ -66,9 +85,12 @@ public class PlayerMovement : MonoBehaviour {
             Ray ray = new Ray (mainCamera.transform.position, mainCamera.transform.forward);
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast (ray, out hit, Mathf.Infinity, metalMask)) {
-                // Debug.DrawRay (ray.origin, ray.direction, Color.green, 2f);
-                hit.rigidbody.AddForce (pushStrength * -ray.direction);
+                pulling = true;
+                pulledObject = hit.rigidbody;
+                pulledObject.isKinematic = true;
             }
+        } else if (context.phase == InputActionPhase.Canceled && pulledObject != null) {
+            DropObject ();
         }
     }
 
@@ -79,9 +101,20 @@ public class PlayerMovement : MonoBehaviour {
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast (ray, out hit, Mathf.Infinity, metalMask)) {
                 // Debug.DrawRay (ray.origin, ray.direction, Color.green, 2f);
+                if (pulledObject != null) {
+                    DropObject ();
+                }
                 hit.rigidbody.AddForce (pushStrength * ray.direction);
             }
         }
+    }
+
+    private void DropObject () {
+        pulling = false;
+        holding = false;
+        pulledObject.isKinematic = false;
+        pulledObject.transform.parent = null;
+        pulledObject = null;
     }
 
     public void Jump (InputAction.CallbackContext context) {
