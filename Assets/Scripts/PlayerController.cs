@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         MovePlayer ();
 
         // launching
-        if (launching && !holding) {
+        if (launching) {
             RaycastHit hit;
 
             Vector3 SphereCastStart = groundCheck.position;
@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour {
                 pulledObject.transform.parent = pullPosition;
                 pulledObject.transform.localPosition = Vector3.zero;
                 pulledObject.isKinematic = true;
+                pulledObject.gameObject.layer = 0; // moving to default layer so you can't launch while holding
                 holding = true;
             } else {
                 pulledObject.position = Vector3.MoveTowards (pulledObject.position, pullPosition.position, pullStrength / ((pulledObject.position - pullPosition.position).magnitude * pulledObject.mass));
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour {
         holding = false;
         pulledObject.isKinematic = false;
         pulledObject.transform.parent = null;
+        pulledObject.gameObject.layer = 9; // putting back in metal layer
         pulledObject = null;
     }
 
@@ -156,12 +158,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void Push (InputAction.CallbackContext context) {
+        if (pulledObject != null) {
+            DropObject ();
+        }
         if (context.phase == InputActionPhase.Started) {
             RaycastHit hit;
             if (Physics.SphereCast (mainCamera.transform.position, pushRadius, mainCamera.transform.forward, out hit, Mathf.Infinity, metalMask)) {
-                if (pulledObject != null) {
-                    DropObject ();
-                }
                 if (hit.rigidbody.velocity.magnitude < 10f) {
                     hit.rigidbody.AddForce ((pushStrength * mainCamera.transform.forward) / (hit.rigidbody.position - transform.position).magnitude);
                 }
