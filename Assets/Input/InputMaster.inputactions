@@ -251,7 +251,7 @@
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Gamepad",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
