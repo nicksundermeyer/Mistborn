@@ -1,8 +1,9 @@
 {
 	"files.exclude": {
-		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn_CPP/.vscode": true,
-		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn_CPP/Content": true,
-		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn_CPP/Intermediate": true,
-		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn_CPP/Saved": true
+		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn/.git": true,
+		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn/.vscode": true,
+		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn/Content": true,
+		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn/Intermediate": true,
+		"C:/Users/nicks/Documents/Projects/Unreal Projects/Mistborn/Saved": true
 	}
 }

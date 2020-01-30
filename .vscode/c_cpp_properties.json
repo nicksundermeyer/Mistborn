@@ -4,8 +4,8 @@
             "name": "UnrealEngine",
             "includePath": [
                 "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Source",
-                "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\Mistborn",
-                "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Source",
+                "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\Mistborn",
+                "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Source",
                 "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Source\\Runtime",
                 "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Source\\Runtime\\TraceLog\\Public",
                 "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Source\\Runtime\\Core\\Public",

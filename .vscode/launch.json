@@ -5,7 +5,7 @@
 			"name": "Mistborn (Debug)",
 			"request": "launch",
 			"preLaunchTask": "Mistborn Win64 Debug Build",
-			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Binaries\\Win64\\UE4-Win64-Debug.exe",
+			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Binaries\\Win64\\UE4-Win64-Debug.exe",
 			"args": [
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
@@ -18,7 +18,7 @@
 			"name": "Mistborn (DebugGame)",
 			"request": "launch",
 			"preLaunchTask": "Mistborn Win64 DebugGame Build",
-			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
+			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
 			"args": [
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
@@ -31,7 +31,7 @@
 			"name": "Mistborn (Development)",
 			"request": "launch",
 			"preLaunchTask": "Mistborn Win64 Development Build",
-			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Binaries\\Win64\\UE4.exe",
+			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Binaries\\Win64\\UE4.exe",
 			"args": [
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
@@ -44,7 +44,7 @@
 			"name": "Mistborn (Shipping)",
 			"request": "launch",
 			"preLaunchTask": "Mistborn Win64 Shipping Build",
-			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
+			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
 			"args": [
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
@@ -57,7 +57,7 @@
 			"name": "Mistborn (Test)",
 			"request": "launch",
 			"preLaunchTask": "Mistborn Win64 Test Build",
-			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Binaries\\Win64\\UE4-Win64-Test.exe",
+			"program": "C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Binaries\\Win64\\UE4-Win64-Test.exe",
 			"args": [
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
@@ -72,7 +72,7 @@
 			"preLaunchTask": "MistbornEditor Win64 Debug Build",
 			"program": "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Binaries\\Win64\\UE4Editor-Win64-Debug.exe",
 			"args": [
-				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Mistborn.uproject"
+				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Mistborn.uproject"
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
 			"stopAtEntry": false,
@@ -86,7 +86,7 @@
 			"preLaunchTask": "MistbornEditor Win64 DebugGame Build",
 			"program": "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Binaries\\Win64\\UE4Editor-Win64-DebugGame.exe",
 			"args": [
-				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Mistborn.uproject"
+				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Mistborn.uproject"
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
 			"stopAtEntry": false,
@@ -100,7 +100,7 @@
 			"preLaunchTask": "MistbornEditor Win64 Development Build",
 			"program": "C:\\Program Files\\Epic Games\\UE_4.24\\Engine\\Binaries\\Win64\\UE4Editor.exe",
 			"args": [
-				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Mistborn.uproject"
+				"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Mistborn.uproject"
 			],
 			"cwd": "C:\\Program Files\\Epic Games\\UE_4.24",
 			"stopAtEntry": false,
@@ -117,7 +117,7 @@
 			"args": [
 				"-projectfiles",
 				"-vscode",
-				"-project=\"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn_CPP\\Mistborn.uproject\"",
+				"-project=\"C:\\Users\\nicks\\Documents\\Projects\\Unreal Projects\\Mistborn\\Mistborn.uproject\"",
 				"-game",
 				"-engine"
 			],
