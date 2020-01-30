@@ -67,15 +67,16 @@ void AMistbornCharacter::Tick(float DeltaTime)
 	// pull object towards player
 	if(PulledObject != nullptr)
 	{
+		UStaticMeshComponent* MeshRoot = Cast<UStaticMeshComponent>(PulledObject->GetRootComponent());
+
 		FVector Start = FirstPersonCameraComponent->GetComponentLocation();
 		FVector ForwardVector = FirstPersonCameraComponent->GetForwardVector();
 		FVector End = Start + (ForwardVector * 300.0f);
 
 		FHitResult OutSweepHitResult;
-		FVector Interpolation = FMath::VInterpConstantTo(PulledObject->GetActorLocation(), End, FApp::GetDeltaTime(), (PullStrength*1000.0f)/((PulledObject->GetActorLocation()-End).Size() + Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->GetMass()));
+		FVector Interpolation = FMath::VInterpConstantTo(PulledObject->GetActorLocation(), End, FApp::GetDeltaTime(), PullStrength/(PulledObject->GetActorLocation()-End).Size() + Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->GetMass());
 
-		PulledObject->SetActorLocation(Interpolation, true, &OutSweepHitResult, ETeleportType::None);
-
+		PulledObject->SetActorLocation(Interpolation, false, &OutSweepHitResult, ETeleportType::None);
 		if((PulledObject->GetActorLocation()-End).Size() < 100.0f)
 		{
 			Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->SetEnableGravity(false);
@@ -112,6 +113,8 @@ void AMistbornCharacter::OnPullStart()
 		{
 			// disable actor physics and set reference
 			PulledObject = Hit.GetActor();
+			UStaticMeshComponent* MeshRoot = Cast<UStaticMeshComponent>(PulledObject->GetRootComponent());
+			MeshRoot->SetPhysicsAngularVelocity(FVector::ZeroVector);
 		}
 	}
 }
