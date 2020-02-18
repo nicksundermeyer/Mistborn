@@ -28,6 +28,7 @@ void AMistbornCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+	isGrounded = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,12 +75,26 @@ void AMistbornCharacter::Tick(float DeltaTime)
 		FVector End = Start + (ForwardVector * 300.0f);
 
 		FHitResult OutSweepHitResult;
-		FVector Interpolation = FMath::VInterpConstantTo(PulledObject->GetActorLocation(), End, FApp::GetDeltaTime(), PullStrength/(PulledObject->GetActorLocation()-End).Size() + Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->GetMass());
+		FVector Interpolation = FMath::VInterpConstantTo(PulledObject->GetActorLocation(), End, FApp::GetDeltaTime(), PullStrength/(PulledObject->GetActorLocation()-End).Size() + (1/Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->GetMass()));
 
 		PulledObject->SetActorLocation(Interpolation, false, &OutSweepHitResult, ETeleportType::None);
 		if((PulledObject->GetActorLocation()-End).Size() < 100.0f)
 		{
 			Cast<UStaticMeshComponent>(PulledObject->GetRootComponent())->SetEnableGravity(false);
+		}
+	}
+
+	// launching
+	if(launching)
+	{
+		FHitResult hit;
+
+		if(Raycast(&hit, LaunchRadius, LaunchDistance, FVector(0, 0, -1)))
+		{
+			if(hit.GetActor()->ActorHasTag("Metal"))
+			{
+				ACharacter::LaunchCharacter(FVector(0, 0, LaunchStrength), true, true);
+			}
 		}
 	}
 }
@@ -90,7 +105,7 @@ void AMistbornCharacter::OnPush()
 
 	FHitResult Hit;
 	
-	if(RaycastForward(&Hit))
+	if(Raycast(&Hit, PowerRadius, PowerDistance, FirstPersonCameraComponent->GetForwardVector()))
 	{
 		if(Hit.GetActor()->IsRootComponentMovable() && Hit.GetActor()->ActorHasTag("Metal")) 
 		{
@@ -107,7 +122,7 @@ void AMistbornCharacter::OnPullStart()
 {
 	FHitResult Hit;
 
-	if(RaycastForward(&Hit))
+	if(Raycast(&Hit, PowerRadius, PowerDistance, FirstPersonCameraComponent->GetForwardVector()))
 	{
 		if(Hit.GetActor()->IsRootComponentMovable() && Hit.GetActor()->ActorHasTag("Metal")) 
 		{
@@ -135,22 +150,26 @@ void AMistbornCharacter::DropObject()
 	}
 }
 
-bool AMistbornCharacter::RaycastForward(FHitResult *Hit)
+bool AMistbornCharacter::Raycast(FHitResult *Hit, float radius, float distance, FVector direction)
 {
 	FVector Start = FirstPersonCameraComponent->GetComponentLocation();
-	FVector ForwardVector = FirstPersonCameraComponent->GetForwardVector();
-	FVector End = Start + (ForwardVector * AMistbornCharacter::PowerDistance);
+	FVector End = Start + (direction * distance);
+	FQuat Rot = FQuat::MakeFromEuler(FVector(0, 0, 0));
 
 	// DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 2.0f);
 
-	FCollisionQueryParams CollisionParams;
+	FCollisionShape sphere = FCollisionShape::MakeSphere(radius);
+	FCollisionQueryParams queryParams;
+	queryParams.AddIgnoredActor(GetUniqueID()); // ignore self
+	FCollisionResponseParams responseParams;
+	FHitResult hit;
 
-	if(GetWorld()->LineTraceSingleByChannel(*Hit, Start, End, ECC_Visibility, CollisionParams))
+	FCollisionQueryParams CollisionParams;
+	if(GetWorld()->SweepSingleByChannel(*Hit, Start, End, Rot, ECC_WorldDynamic, sphere, queryParams, responseParams))
 	{
 		return true;
 	}
-	else
-	{
+	else {
 		return false;
 	}
 }
@@ -187,10 +206,25 @@ void AMistbornCharacter::LookUpAtRate(float Rate)
 
 void AMistbornCharacter::Jump()
 {
-	ACharacter::Jump();
+	if(isGrounded)
+	{
+		ACharacter::Jump();
+		isGrounded = false;
+	}
+	else
+	{
+		launching = true;
+	}
 }
 
-void AMistbornCharacter::StopJumping() 
+void AMistbornCharacter::StopJumping()
 {
 	ACharacter::StopJumping();
+	launching = false;
+}
+
+void AMistbornCharacter::Landed(const FHitResult& hit)
+{
+	ACharacter::Landed(hit);
+	isGrounded = true;
 }

@@ -31,6 +31,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Powers)
 	float PowerDistance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Powers)
+	float PowerRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Powers)
+	float LaunchStrength;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Powers)
+	float LaunchDistance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Powers)
+	float LaunchRadius;
+
+	bool isGrounded;
+	bool launching;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -59,7 +74,7 @@ protected:
 	void DropObject();
 
 	// Helper functiont to raycast
-	bool RaycastForward(FHitResult *Hit);
+	bool Raycast(FHitResult *Hit, float radius, float distance, FVector direction);
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
@@ -82,6 +97,8 @@ protected:
 	virtual void Jump() override;
 
 	virtual void StopJumping() override;
+
+	virtual void Landed(const FHitResult& hit) override;
 
 	
 protected:
